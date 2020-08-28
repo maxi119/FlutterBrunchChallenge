@@ -3,8 +3,16 @@ import 'package:flutter_brunch_challenge/const.dart';
 
 import 'component/introduction_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。宣告一個型別為 GlobalKey<ScaffoldState> 的變數，建議名稱：_scaffoldKey
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  bool _visible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +56,21 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // TODO 2020/08/29 小挑戰2：幫 App 介紹區塊加上動畫效果。參考：https://flutter.dev/docs/cookbook/animation/opacity-animation
-              IntroductionWidget(),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _visible = !_visible;
+                  });
+                },
+                child: AnimatedOpacity(
+                  // If the widget is visible, animate to 0.0 (invisible).
+                  // If the widget is hidden, animate to 1.0 (fully visible).
+                  opacity: _visible ? 0.0 : 1.0,
+                  duration: Duration(milliseconds: 500),
+                  // The green box must be a child of the AnimatedOpacity widget.
+                  child: IntroductionWidget(),
+                ),
+              ),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -84,5 +105,4 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  } // TODO 提早做完的話，可以透過 抽變數 或 抽 StatelessWidget 的方式 整理程式碼，讓 build function 不會落落長，增加程式碼可讀性！
-}
+  } }
