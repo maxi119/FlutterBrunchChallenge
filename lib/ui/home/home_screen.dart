@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(Wording.homePageName),
       ),
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: Colors.lime.shade200,
       drawer: HomeDrawer(),
       body: Container(
         child: SingleChildScrollView(
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildAnimatedIntroductionArea(),
               SectionHeaderWidget(
                 text: 'Challenges',
-                textColor: Colors.cyanAccent,
+                textColor: Colors.teal.shade400,
               ),
               _challengeItem20200829(),
             ],
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _challengeItem20200829() {
     return ChallengeItemWidget(
-      backgroundColor: Colors.deepOrange.shade400,
+      backgroundColor: Colors.teal.shade200,
       onPressed: () {
         setState(() {
           _scaffoldKey.currentState.openDrawer();

@@ -13,13 +13,13 @@ class IntroductionWidget extends StatelessWidget {
         children: [
           SectionHeaderWidget(
             text: 'App Introduction',
-            textColor: Colors.cyanAccent,
+            textColor: Colors.deepPurple,
           ),
           Container(
             margin: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Colors.white38,
+                color: Colors.deepPurple.shade300,
                 borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: Text(
