@@ -4,19 +4,19 @@ import 'package:flutter_brunch_challenge/const.dart';
 import 'component/introduction_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。宣告一個型別為 GlobalKey<ScaffoldState> 的變數，建議名稱：_scaffoldKey
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   bool _visible = false;
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。將 Scaffold 的 key 設定為宣告的 _scaffoldKey
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(Wording.homePageName),
       ),
@@ -83,20 +83,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Container(
                 margin: const EdgeInsets.only(left: 24, right: 24, bottom: 18),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    color: Colors.white38,
-                    borderRadius: BorderRadius.circular(8)),
-                child: Center(
-                  // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。幫文字加上點擊事件，
-                  //  並在點擊後，透過 _scaffoldKey 取得 currentState，
-                  //  將狀態變更為 openDrawer，最後呼叫 setState()
-                  child: Text(
-                    'Flutter Brunch 2020/08 '
-                    '\n 1. Widget 練習：Drawer'
-                    '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
-                    '\n 3. 點擊開啟 Drawer',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                child: RaisedButton(
+                  color: Colors.deepOrange.shade400,
+                  padding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _scaffoldKey.currentState.openDrawer();
+                    });
+                  },
+                  child: Center(
+                    // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。幫文字加上點擊事件，
+                    //  並在點擊後，透過 _scaffoldKey 取得 currentState，
+                    //  將狀態變更為 openDrawer，最後呼叫 setState()
+                    child: Text(
+                      'Flutter Brunch 2020/08 '
+                      '\n 1. Widget 練習：Drawer'
+                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
+                      '\n 3. 點擊開啟 Drawer',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
                   ),
                 ),
               ),
@@ -105,4 +113,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  } }
+  }
+}
