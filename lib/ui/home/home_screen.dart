@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/const.dart';
 import 'package:flutter_brunch_challenge/ui/home/component/challenge_item_widget.dart';
+import 'package:flutter_brunch_challenge/ui/home/component/sectoin_header_widget.dart';
 
 import 'component/home_drawer_widget.dart';
 import 'component/introduction_widget.dart';
@@ -29,15 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               _buildAnimatedIntroductionArea(),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Text(
-                    'Challenges',
-                    style: TextStyle(color: Colors.cyanAccent, fontSize: 18),
-                  ),
-                ),
+              SectionHeaderWidget(
+                text: 'Challenges',
+                textColor: Colors.cyanAccent,
               ),
               _challengeItem20200829(),
             ],
