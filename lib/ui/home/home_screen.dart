@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/const.dart';
 
+import 'component/home_drawer_widget.dart';
 import 'component/introduction_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,37 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(Wording.homePageName),
       ),
       backgroundColor: Colors.blue.shade900,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: Text(
-                Wording.homePageName,
-                style: TextStyle(
-                  fontSize: 36,
-                  color: Colors.lime.shade100,
-                ),
-              ),
-              decoration: BoxDecoration(color: Colors.deepOrange.shade200),
-            ),
-            ListTile(
-              title: Text('小挑戰們',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  )),
-              leading: Icon(
-                Icons.assistant_photo,
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: HomeDrawer(),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -112,3 +83,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
