@@ -4,17 +4,21 @@ import 'package:flutter_brunch_challenge/const.dart';
 import 'component/introduction_widget.dart';
 
 class HomeScreen extends StatelessWidget {
+  // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。宣告一個型別為 GlobalKey<ScaffoldState> 的變數，建議名稱：_scaffoldKey
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。將 Scaffold 的 key 設定為宣告的 _scaffoldKey
       appBar: AppBar(
         title: Text(Wording.homePageName),
       ),
       backgroundColor: Colors.blue.shade900,
+      // TODO 2020/08/29 小挑戰1：幫頁面加上 Drawer。參考： https://flutter.dev/docs/cookbook/design/drawer
       body: Container(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              // TODO 2020/08/29 小挑戰2：幫 App 介紹區塊加上動畫效果。參考：https://flutter.dev/docs/cookbook/animation/opacity-animation
               IntroductionWidget(),
               Align(
                 alignment: Alignment.centerLeft,
@@ -26,7 +30,6 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              //  https://flutter.dev/docs/cookbook/design/drawer
               Container(
                 margin: const EdgeInsets.only(left: 24, right: 24, bottom: 18),
                 padding: const EdgeInsets.all(16),
@@ -34,6 +37,9 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white38,
                     borderRadius: BorderRadius.circular(8)),
                 child: Center(
+                  // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。幫文字加上點擊事件，
+                  //  並在點擊後，透過 _scaffoldKey 取得 currentState，
+                  //  將狀態變更為 openDrawer，最後呼叫 setState()
                   child: Text(
                     'Flutter Brunch 2020/08 '
                     '\n 1. Widget 練習：Drawer'
@@ -48,5 +54,5 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-  }
+  } // TODO 提早做完的話，可以透過 抽變數 或 抽 StatelessWidget 的方式 整理程式碼，讓 build function 不會落落長，增加程式碼可讀性！
 }
