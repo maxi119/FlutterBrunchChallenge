@@ -39,22 +39,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              ChallengeItemWidget(
-                  backgroundColor: Colors.deepOrange.shade400,
-                  onPressed: () {
-                    setState(() {
-                      _scaffoldKey.currentState.openDrawer();
-                    });
-                  },
-                  displayText: 'Flutter Brunch 2020/08 '
-                      '\n 1. Widget 練習：Drawer'
-                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
-                      '\n 3. 點擊開啟 Drawer',
-                  textColor: Colors.white),
+              _challengeItem20200829(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _challengeItem20200829() {
+    return ChallengeItemWidget(
+      backgroundColor: Colors.deepOrange.shade400,
+      onPressed: () {
+        setState(() {
+          _scaffoldKey.currentState.openDrawer();
+        });
+      },
+      displayText: 'Flutter Brunch 2020/08 '
+          '\n 1. Widget 練習：Drawer'
+          '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
+          '\n 3. 點擊開啟 Drawer',
+      textColor: Colors.white,
     );
   }
 
