@@ -22,6 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       '\n 1. Widget 練習：Drawer'
                       '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
                       '\n 3. 點擊開啟 Drawer';
+    var onPressed = () {
+                    setState(() {
+                      _scaffoldKey.currentState.openDrawer();
+                    });
+                  };
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -52,11 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _scaffoldKey.currentState.openDrawer();
-                    });
-                  },
+                  onPressed: onPressed,
                   child: Center(
                     child: Text(
                       displayText,
