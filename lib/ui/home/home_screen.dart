@@ -95,9 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   child: Center(
-                    // TODO 2020/08/29 小挑戰3：點擊開啟 Drawer。幫文字加上點擊事件，
-                    //  並在點擊後，透過 _scaffoldKey 取得 currentState，
-                    //  將狀態變更為 openDrawer，最後呼叫 setState()
                     child: Text(
                       'Flutter Brunch 2020/08 '
                       '\n 1. Widget 練習：Drawer'
