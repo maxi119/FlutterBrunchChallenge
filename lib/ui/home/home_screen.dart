@@ -17,17 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var backgroundColor = Colors.deepOrange.shade400;
-    var textColor = Colors.white;
-    var displayText = 'Flutter Brunch 2020/08 '
-        '\n 1. Widget 練習：Drawer'
-        '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
-        '\n 3. 點擊開啟 Drawer';
-    var onPressed = () {
-      setState(() {
-        _scaffoldKey.currentState.openDrawer();
-      });
-    };
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -51,10 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ChallengeItemWidget(
-                  backgroundColor: backgroundColor,
-                  onPressed: onPressed,
-                  displayText: displayText,
-                  textColor: textColor),
+                  backgroundColor: Colors.deepOrange.shade400,
+                  onPressed: () {
+                    setState(() {
+                      _scaffoldKey.currentState.openDrawer();
+                    });
+                  },
+                  displayText: 'Flutter Brunch 2020/08 '
+                      '\n 1. Widget 練習：Drawer'
+                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
+                      '\n 3. 點擊開啟 Drawer',
+                  textColor: Colors.white),
             ],
           ),
         ),
