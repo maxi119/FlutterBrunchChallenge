@@ -16,6 +16,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var backgroundColor = Colors.deepOrange.shade400;
+    var textColor = Colors.white;
+    var displayText = 'Flutter Brunch 2020/08 '
+                      '\n 1. Widget 練習：Drawer'
+                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
+                      '\n 3. 點擊開啟 Drawer';
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -41,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 margin: const EdgeInsets.only(left: 24, right: 24, bottom: 18),
                 child: RaisedButton(
-                  color: Colors.deepOrange.shade400,
+                  color: backgroundColor,
                   padding: const EdgeInsets.all(16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -53,11 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Center(
                     child: Text(
-                      'Flutter Brunch 2020/08 '
-                      '\n 1. Widget 練習：Drawer'
-                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
-                      '\n 3. 點擊開啟 Drawer',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      displayText,
+                      style: TextStyle(color: textColor, fontSize: 18),
                     ),
                   ),
                 ),
