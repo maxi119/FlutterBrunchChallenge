@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/const.dart';
 
+import 'component/introduction_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -8,12 +10,12 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(Wording.homePageName),
       ),
+      backgroundColor: Colors.blue.shade900,
       body: Container(
-        color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('這是一個，用於展示每次 Flutter Brunch 現場小挑戰內容的 App。'),
+              IntroductionWidget(),
               Text('活動與練習項目'),
               //  https://flutter.dev/docs/cookbook/design/drawer
               Text('Flutter Brunch 2020/08 '
@@ -27,3 +29,4 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
