@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/const.dart';
+import 'package:flutter_brunch_challenge/ui/home/component/challenge_item_widget.dart';
 
 import 'component/home_drawer_widget.dart';
 import 'component/introduction_widget.dart';
@@ -19,14 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
     var backgroundColor = Colors.deepOrange.shade400;
     var textColor = Colors.white;
     var displayText = 'Flutter Brunch 2020/08 '
-                      '\n 1. Widget 練習：Drawer'
-                      '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
-                      '\n 3. 點擊開啟 Drawer';
+        '\n 1. Widget 練習：Drawer'
+        '\n 2. 動畫練習：幫 App 介紹區塊加上動畫效果'
+        '\n 3. 點擊開啟 Drawer';
     var onPressed = () {
-                    setState(() {
-                      _scaffoldKey.currentState.openDrawer();
-                    });
-                  };
+      setState(() {
+        _scaffoldKey.currentState.openDrawer();
+      });
+    };
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -49,23 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left: 24, right: 24, bottom: 18),
-                child: RaisedButton(
-                  color: backgroundColor,
-                  padding: const EdgeInsets.all(16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+              ChallengeItemWidget(
+                  backgroundColor: backgroundColor,
                   onPressed: onPressed,
-                  child: Center(
-                    child: Text(
-                      displayText,
-                      style: TextStyle(color: textColor, fontSize: 18),
-                    ),
-                  ),
-                ),
-              ),
+                  displayText: displayText,
+                  textColor: textColor),
             ],
           ),
         ),
