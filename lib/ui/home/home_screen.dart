@@ -13,7 +13,37 @@ class HomeScreen extends StatelessWidget {
         title: Text(Wording.homePageName),
       ),
       backgroundColor: Colors.blue.shade900,
-      // TODO 2020/08/29 小挑戰1：幫頁面加上 Drawer。參考： https://flutter.dev/docs/cookbook/design/drawer
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text(
+                Wording.homePageName,
+                style: TextStyle(
+                  fontSize: 36,
+                  color: Colors.lime.shade100,
+                ),
+              ),
+              decoration: BoxDecoration(color: Colors.deepOrange.shade200),
+            ),
+            ListTile(
+              title: Text('小挑戰們',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                  )),
+              leading: Icon(
+                Icons.assistant_photo,
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
