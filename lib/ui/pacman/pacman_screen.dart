@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/component/barrier_square.dart';
@@ -60,6 +61,20 @@ class _PacManScreenState extends State<PacManScreen> {
     }
   }
 
+  _angle() {
+    switch (direction) {
+      case "left" :
+        return pi;
+      case "right":
+        return pi * 2;
+      case "up":
+        return pi/2 * 3;
+      case "down":
+        return pi/2;
+    }
+    return pi;
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -102,7 +117,10 @@ class _PacManScreenState extends State<PacManScreen> {
                     ),
                     itemBuilder: (BuildContext context, int index) {
                       if (index == playerIndex) {
-                        return Image.asset("images/pacman.png");
+                        return Transform.rotate(
+                            angle: _angle(),
+                            child: Image.asset("images/pacman.png"),
+                        );
                       }
                       if (barriers.contains(index)) {
                         return BarrierSquare(
