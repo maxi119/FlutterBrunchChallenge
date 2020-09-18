@@ -10,9 +10,11 @@ class PacManScreen extends StatefulWidget {
 }
 
 class _PacManScreenState extends State<PacManScreen> {
-  final int numberInRow = 11;
-  final int numberOfSquares = 11 * 17;
+  static int numberInRow = 11;
+  static int numberInColumn = 17;
+  final int numberOfSquares = 11 * numberInColumn;
   final List<int> barriers = PacManMap().barriers;
+  int playerIndex = numberInRow * (numberInColumn - 2) + 1; // 初始位置在左下角
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +34,14 @@ class _PacManScreenState extends State<PacManScreen> {
                     crossAxisCount: numberInRow,
                   ),
                   itemBuilder: (BuildContext context, int index) {
+                    if (index == playerIndex) {
+                      return Image.asset("images/pacman.png");
+                    }
                     if (barriers.contains(index)) {
                       return BarrierSquare(
                         color: Colors.indigoAccent,
                         innerColor: Colors.blueAccent,
-//                        child: Text('$index'),
+                        child: Text('$index'),
                       );
                     }
                     return PathSquare(
