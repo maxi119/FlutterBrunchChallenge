@@ -9,7 +9,7 @@
 8月小挑戰我們練習了一些基本 Widget，最後兜岀一個有首頁 Drawer 的畫面，    
 這次來玩小遊戲吧！    
 來挑戰社團分享中，有蠻多留言，也有人跟著做了分享出來的 PACMAN！    
-https://www.youtube.com/watch?v=PbIlXoijRvM
+原作者實作影片連結： https://www.youtube.com/watch?v=PbIlXoijRvM
 
 #### 最終樣貌
 <img src="https://github.com/hl3hl3/FlutterBrunchChallenge/blob/feature/20200919_pacman/readme/challenge202009/20200919_pacman_0_final.png" width="600">
