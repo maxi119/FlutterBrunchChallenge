@@ -16,6 +16,10 @@ class _PacManScreenState extends State<PacManScreen> {
   final List<int> barriers = PacManMap().barriers;
   int playerIndex = numberInRow * (numberInColumn - 2) + 1; // 初始位置在左下角
 
+  _startGame() {
+    debugPrint("startGame!");
+  }
+
   @override
   Widget build(BuildContext context) {
     ///    小精靈圖檔
@@ -55,8 +59,24 @@ class _PacManScreenState extends State<PacManScreen> {
           Expanded(
             child: Container(
               color: Colors.black,
-
-              ///              child:   這邊可以放 分數 或 開始遊戲 按鈕
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Score: ',
+                    style: TextStyle(color: Colors.white, fontSize: 36),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _startGame();
+                    },
+                    child: Text(
+                      'P L A Y',
+                      style: TextStyle(color: Colors.white, fontSize: 36),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
