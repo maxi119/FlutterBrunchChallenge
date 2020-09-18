@@ -145,7 +145,7 @@ class _PacManScreenState extends State<PacManScreen> {
                         return BarrierSquare(
                           color: Colors.indigoAccent,
                           innerColor: Colors.blueAccent,
-                          child: Text('$index'),
+//                          child: Text('$index'),
                         );
                       }
                       if (foods.contains(index)) {
