@@ -7,7 +7,7 @@ class FlutterBrunchChallengeApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Brunch Challenge',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.cyan,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeScreen(),
