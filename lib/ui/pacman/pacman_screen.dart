@@ -8,6 +8,13 @@ class PacManScreen extends StatefulWidget {
 class _PacManScreenState extends State<PacManScreen> {
   final numberInRow = 10;
   final numberOfSquares = 10 * 10;
+  final List<int> barriers = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    10, 19,
+    20, 29,
+    30, 39,
+    90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +34,17 @@ class _PacManScreenState extends State<PacManScreen> {
                     crossAxisCount: numberInRow,
                   ),
                   itemBuilder: (BuildContext context, int index) {
+                    if (barriers.contains(index)) {
+                      return Container(
+                        color: Colors.orange,
+                        margin: EdgeInsets.all(1),
+                        child: Text('$index'),
+                      );
+                    }
                     return Container(
                       color: Colors.grey,
                       margin: EdgeInsets.all(1),
+                      child: Text('$index'),
                     );
                   },
                 )),
