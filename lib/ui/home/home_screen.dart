@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/const.dart';
 import 'package:flutter_brunch_challenge/ui/home/component/challenge_item_widget.dart';
 import 'package:flutter_brunch_challenge/ui/home/component/sectoin_header_widget.dart';
+import 'package:flutter_brunch_challenge/ui/pacman/pacman_screen.dart';
 
 import 'component/home_drawer_widget.dart';
 import 'component/introduction_widget.dart';
@@ -48,7 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.teal.shade200,
       onPressed: () {
         setState(() {
-          _scaffoldKey.currentState.openDrawer();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext buildContext) {
+                return PACMANScreen();
+              },
+            ),
+          );
         });
       },
       displayText: 'Flutter Brunch 2020/09 '
