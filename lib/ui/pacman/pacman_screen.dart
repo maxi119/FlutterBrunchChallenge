@@ -17,6 +17,7 @@ class _PacManScreenState extends State<PacManScreen> {
   static int numberInColumn = 17;
   final int numberOfSquares = 11 * numberInColumn;
   final List<int> barriers = PacManMap().barriers;
+  List<int> foods = List();
   int playerIndex = numberInRow * (numberInColumn - 2) + 1; // 初始位置在左下角
   Timer timer;
   String direction = "";
@@ -34,6 +35,10 @@ class _PacManScreenState extends State<PacManScreen> {
 
   _move() {
     debugPrint("move! direction=$direction");
+
+    if (foods.contains(playerIndex)) {
+      foods.remove(playerIndex);
+    }
 
     int nextIndex = playerIndex;
     switch (direction) {
@@ -73,6 +78,20 @@ class _PacManScreenState extends State<PacManScreen> {
         return pi/2;
     }
     return pi;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 添加食物列表
+    for (int i=0; i<numberOfSquares; i++) {
+      if (barriers.contains(i)) {
+        // 路障，不是食物
+      } else {
+        foods.add(i);
+      }
+    }
   }
 
   @override
@@ -129,9 +148,16 @@ class _PacManScreenState extends State<PacManScreen> {
                           child: Text('$index'),
                         );
                       }
+                      if (foods.contains(index)) {
+                        return PathSquare(
+                          color: Colors.black,
+                          innerColor: Colors.yellow,
+//                      child: Text('$index'),
+                        );
+                      }
                       return PathSquare(
                         color: Colors.black,
-                        innerColor: Colors.yellow,
+                        innerColor: Colors.black,
 //                      child: Text('$index'),
                       );
                     },
