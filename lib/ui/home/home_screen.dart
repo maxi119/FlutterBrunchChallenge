@@ -34,11 +34,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Challenges',
                 textColor: Colors.teal.shade400,
               ),
+              _challengeItem20200919(),
               _challengeItem20200829(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _challengeItem20200919() {
+    return ChallengeItemWidget(
+      backgroundColor: Colors.teal.shade200,
+      onPressed: () {
+        setState(() {
+          _scaffoldKey.currentState.openDrawer();
+        });
+      },
+      displayText: 'Flutter Brunch 2020/09 '
+          '\n>>>> PACMAN CHALLENGE <<<<',
+      textColor: Colors.white,
     );
   }
 
