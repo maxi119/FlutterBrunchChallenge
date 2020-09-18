@@ -18,23 +18,46 @@ class _PacManScreenState extends State<PacManScreen> {
   final List<int> barriers = PacManMap().barriers;
   int playerIndex = numberInRow * (numberInColumn - 2) + 1; // 初始位置在左下角
   Timer timer;
+  String direction = "";
+
   _startGame() {
     debugPrint("startGame!");
     if (timer != null) {
       timer.cancel();
       timer = null;
     }
-    timer = Timer.periodic(Duration(milliseconds: 150), (timer) {
-      debugPrint("move!");
-      if (barriers.contains(playerIndex + 1)) {
-        // 撞牆，不動
-      } else {
-        setState(() {
-          playerIndex++;
-          debugPrint("move to $playerIndex");
-        });
-      }
+    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      _move();
     });
+  }
+
+  _move() {
+    debugPrint("move! direction=$direction");
+
+    int nextIndex = playerIndex;
+    switch (direction) {
+      case "left" :
+        nextIndex = playerIndex - 1;
+        break;
+      case "right":
+        nextIndex = playerIndex + 1;
+        break;
+      case "up":
+        nextIndex = playerIndex - numberInRow;
+        break;
+      case "down":
+        nextIndex = playerIndex + numberInRow;
+        break;
+    }
+
+    if (barriers.contains(nextIndex)) {
+      // 撞牆，不動
+    } else {
+      setState(() {
+        playerIndex = nextIndex;
+//        debugPrint("move to $playerIndex");
+      });
+    }
   }
 
   @override
@@ -54,31 +77,48 @@ class _PacManScreenState extends State<PacManScreen> {
         children: [
           Expanded(
             flex: 5,
-            child: Container(
-                color: Colors.black,
-                child: GridView.builder(
-                  itemCount: numberOfSquares,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: numberInRow,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == playerIndex) {
-                      return Image.asset("images/pacman.png");
-                    }
-                    if (barriers.contains(index)) {
-                      return BarrierSquare(
-                        color: Colors.indigoAccent,
-                        innerColor: Colors.blueAccent,
-                        child: Text('$index'),
-                      );
-                    }
-                    return PathSquare(
-                      color: Colors.black,
-                      innerColor: Colors.yellow,
+            child: GestureDetector(
+              onVerticalDragUpdate: (DragUpdateDetails details) {
+                if (details.delta.dy < 0) {
+                  direction = "up";
+                } else {
+                  direction = "down";
+                }
+              },
+              onHorizontalDragUpdate: (DragUpdateDetails details) {
+                if (details.delta.dx < 0) {
+                  direction = "left";
+                } else {
+                  direction = "right";
+                }
+              },
+              child: Container(
+                  color: Colors.black,
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: numberOfSquares,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: numberInRow,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == playerIndex) {
+                        return Image.asset("images/pacman.png");
+                      }
+                      if (barriers.contains(index)) {
+                        return BarrierSquare(
+                          color: Colors.indigoAccent,
+                          innerColor: Colors.blueAccent,
+                          child: Text('$index'),
+                        );
+                      }
+                      return PathSquare(
+                        color: Colors.black,
+                        innerColor: Colors.yellow,
 //                      child: Text('$index'),
-                    );
-                  },
-                )),
+                      );
+                    },
+                  )),
+            ),
           ),
           Expanded(
             child: Container(
