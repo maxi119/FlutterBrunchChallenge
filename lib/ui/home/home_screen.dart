@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             MaterialPageRoute(
               builder: (BuildContext buildContext) {
-                return PACMANScreen();
+                return PacManScreen();
               },
             ),
           );
