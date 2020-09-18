@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/component/barrier_square.dart';
 
@@ -15,9 +17,31 @@ class _PacManScreenState extends State<PacManScreen> {
   final int numberOfSquares = 11 * numberInColumn;
   final List<int> barriers = PacManMap().barriers;
   int playerIndex = numberInRow * (numberInColumn - 2) + 1; // 初始位置在左下角
-
+  Timer timer;
   _startGame() {
     debugPrint("startGame!");
+    if (timer != null) {
+      timer.cancel();
+      timer = null;
+    }
+    timer = Timer.periodic(Duration(milliseconds: 150), (timer) {
+      debugPrint("move!");
+      if (barriers.contains(playerIndex + 1)) {
+        // 撞牆，不動
+      } else {
+        setState(() {
+          playerIndex++;
+          debugPrint("move to $playerIndex");
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
+    timer = null;
   }
 
   @override
