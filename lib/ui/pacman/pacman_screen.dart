@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/barrier_map.dart';
 
@@ -15,9 +17,25 @@ class _PacManScreenState extends State<PacManScreen> {
   int _numberOfSquares = _numberInRow * _numberInColumn;
   int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
+  Timer _timer;
 
   _playGame() {
     debugPrint('play game');
+    _timer?.cancel();
+    _timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+      _move();
+    });
+  }
+
+  _move() {
+    debugPrint('move()');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+    debugPrint('dispose()');
   }
 
   @override
