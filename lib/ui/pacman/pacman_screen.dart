@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/barrier_map.dart';
@@ -50,7 +51,7 @@ class _PacManScreenState extends State<PacManScreen> {
     if (_barriers.contains(player - _numberInRow)) {
       debugPrint('撞牆，不動');
     } else {
-      player-=_numberInRow;
+      player -= _numberInRow;
       setState(() {});
     }
   }
@@ -59,7 +60,7 @@ class _PacManScreenState extends State<PacManScreen> {
     if (_barriers.contains(player + _numberInRow)) {
       debugPrint('撞牆，不動');
     } else {
-      player+=_numberInRow;
+      player += _numberInRow;
       setState(() {});
     }
   }
@@ -80,6 +81,28 @@ class _PacManScreenState extends State<PacManScreen> {
       player++;
       setState(() {});
     }
+  }
+
+  Widget _playerRolw() {
+    double angle = 0;
+    switch (direction) {
+      case "up":
+        angle = pi / 2 * 3;
+        break;
+      case "down":
+        angle = pi / 2;
+        break;
+      case "left":
+        angle = pi;
+        break;
+      case "right":
+        angle = pi * 2;
+        break;
+    }
+    return Transform.rotate(
+      angle: angle,
+      child: Image.asset("images/pacman.png"),
+    );
   }
 
   @override
@@ -123,7 +146,7 @@ class _PacManScreenState extends State<PacManScreen> {
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     if (index == player) {
-                      return Image.asset("images/pacman.png");
+                      return _playerRolw();
                     }
                     if (_barriers.contains(index)) {
                       return Square(
