@@ -21,6 +21,7 @@ class _PacManScreenState extends State<PacManScreen> {
   List<int> _foods = List();
   Timer _timer;
   String direction;
+  int _score = 0;
 
   _playGame() {
     debugPrint('play game');
@@ -32,14 +33,11 @@ class _PacManScreenState extends State<PacManScreen> {
 
   _eatFood() {
     _foods.remove(player);
+    _score ++;
   }
 
   _move() {
     debugPrint('move()');
-    if (_foods.contains(player)) {
-      // 若 食物列表 包含 player 上個 frame 移動後的位置，則代表，可以吃到！！
-      _eatFood();
-    }
     switch (direction) {
       case "up":
         _moveUp();
@@ -53,6 +51,11 @@ class _PacManScreenState extends State<PacManScreen> {
       case "right":
         _moveRight();
         break;
+    }
+    // 動完就判斷是否有東西吃
+    if (_foods.contains(player)) {
+      // 若 食物列表 包含 player 上個 frame 移動後的位置，則代表，可以吃到！！
+      _eatFood();
     }
   }
 
@@ -203,7 +206,7 @@ class _PacManScreenState extends State<PacManScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    'Score:',
+                    'Score: $_score',
                     style: TextStyle(color: Colors.white, fontSize: 36),
                   ),
                   GestureDetector(
