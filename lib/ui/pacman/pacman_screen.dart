@@ -165,7 +165,8 @@ class _PacManScreenState extends State<PacManScreen> {
             if (index == player) {
               return _playerRolw();
             }
-            final childForDebug = Text('$index');
+//            final childForDebug = Text('$index');
+            final childForDebug = null;
             if (_barriers.contains(index)) {
               return Square(
                 backgroundColor: Colors.blue,
