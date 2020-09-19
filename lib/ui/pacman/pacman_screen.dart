@@ -18,6 +18,7 @@ class _PacManScreenState extends State<PacManScreen> {
   int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
   Timer _timer;
+  String direction;
 
   _playGame() {
     debugPrint('play game');
@@ -29,10 +30,54 @@ class _PacManScreenState extends State<PacManScreen> {
 
   _move() {
     debugPrint('move()');
+    switch (direction) {
+      case "up":
+        _moveUp();
+        break;
+      case "down":
+        _moveDown();
+        break;
+      case "left":
+        _moveLeft();
+        break;
+      case "right":
+        _moveRight();
+        break;
+    }
+  }
+
+  _moveUp() {
+    if (_barriers.contains(player - _numberInRow)) {
+      debugPrint('撞牆，不動');
+    } else {
+      player-=_numberInRow;
+      setState(() {});
+    }
+  }
+
+  _moveDown() {
+    if (_barriers.contains(player + _numberInRow)) {
+      debugPrint('撞牆，不動');
+    } else {
+      player+=_numberInRow;
+      setState(() {});
+    }
+  }
+
+  _moveLeft() {
+    if (_barriers.contains(player - 1)) {
+      debugPrint('撞牆，不動');
+    } else {
+      player--;
+      setState(() {});
+    }
+  }
+
+  _moveRight() {
     if (_barriers.contains(player + 1)) {
       debugPrint('撞牆，不動');
     } else {
-      player ++;
+      player++;
       setState(() {});
     }
   }
@@ -55,29 +100,45 @@ class _PacManScreenState extends State<PacManScreen> {
           Expanded(
             flex: 5,
             child: Container(
-              child: GridView.builder(
-                itemCount: _numberOfSquares,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: _numberInRow,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == player) {
-                    return Image.asset("images/pacman.png");
+              child: GestureDetector(
+                onVerticalDragUpdate: (DragUpdateDetails details) {
+                  if (details.delta.dy < 0) {
+                    direction = "up";
+                  } else {
+                    direction = "down";
                   }
-                  if (_barriers.contains(index)) {
-                    return Square(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.cyan,
+                },
+                onHorizontalDragUpdate: (DragUpdateDetails details) {
+                  if (details.delta.dx < 0) {
+                    direction = "left";
+                  } else {
+                    direction = "right";
+                  }
+                },
+                child: GridView.builder(
+                  itemCount: _numberOfSquares,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: _numberInRow,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == player) {
+                      return Image.asset("images/pacman.png");
+                    }
+                    if (_barriers.contains(index)) {
+                      return Square(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.cyan,
+                        child: Text('$index'),
+                      );
+                    }
+                    return PathSquare(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.yellow,
                       child: Text('$index'),
                     );
-                  }
-                  return PathSquare(
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.yellow,
-                    child: Text('$index'),
-                  );
-                },
+                  },
+                ),
               ),
             ),
           ),
