@@ -10,12 +10,15 @@ class PacManScreen extends StatefulWidget {
 }
 
 class _PacManScreenState extends State<PacManScreen> {
-
   static int _numberInRow = 11;
   static int _numberInColumn = 17;
   int _numberOfSquares = _numberInRow * _numberInColumn;
   int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
+
+  _playGame() {
+    debugPrint('play game');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class _PacManScreenState extends State<PacManScreen> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   if (index == player) {
-                    return  Image.asset("images/pacman.png");
+                    return Image.asset("images/pacman.png");
                   }
                   if (_barriers.contains(index)) {
                     return Square(
@@ -56,8 +59,24 @@ class _PacManScreenState extends State<PacManScreen> {
           Expanded(
             child: Container(
               color: Colors.black,
-
-              ///              child:   這邊可以放 分數 或 開始遊戲 按鈕
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    'Score:',
+                    style: TextStyle(color: Colors.white, fontSize: 36),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _playGame();
+                    },
+                    child: Text(
+                      'P L A Y',
+                      style: TextStyle(color: Colors.white, fontSize: 36),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
