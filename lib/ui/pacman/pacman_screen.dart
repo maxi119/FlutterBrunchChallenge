@@ -24,11 +24,12 @@ class _PacManScreenState extends State<PacManScreen> {
   String direction;
   int _score = 0;
   String gameStatus = 'stop';
+  int frameDuration = 500;
 
   _playGame() {
     debugPrint('play game');
     _timer?.cancel();
-    _timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: frameDuration), (timer) {
       _move();
       // 一次更新這個 frame
       setState(() {});
