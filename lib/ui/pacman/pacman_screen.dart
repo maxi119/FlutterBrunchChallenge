@@ -23,6 +23,7 @@ class _PacManScreenState extends State<PacManScreen> {
   Timer _timer;
   String direction;
   int _score = 0;
+  String gameStatus = 'stop';
 
   _playGame() {
     debugPrint('play game');
@@ -34,13 +35,17 @@ class _PacManScreenState extends State<PacManScreen> {
     });
   }
 
+  _stopTimer() {
+    _timer?.cancel();
+  }
+
   _damage() {
-    _score --;
+    _score--;
   }
 
   _eatFood() {
     _foods.remove(player);
-    _score ++;
+    _score++;
   }
 
   _move() {
@@ -128,10 +133,67 @@ class _PacManScreenState extends State<PacManScreen> {
     return Image.asset("images/ghost.png");
   }
 
+  Widget _gameView() {
+    return GestureDetector(
+      behavior: HitTestBehavior.deferToChild,
+      onVerticalDragUpdate: (DragUpdateDetails details) {
+        if (details.delta.dy < 0) {
+          direction = "up";
+        } else {
+          direction = "down";
+        }
+      },
+      onHorizontalDragUpdate: (DragUpdateDetails details) {
+        if (details.delta.dx < 0) {
+          direction = "left";
+        } else {
+          direction = "right";
+        }
+      },
+      child: Container(
+        child: GridView.builder(
+          itemCount: _numberOfSquares,
+          physics: NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: _numberInRow,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            if (index == ghost) {
+              return _ghostRole();
+            }
+            if (index == player) {
+              return _playerRolw();
+            }
+            final childForDebug = Text('$index');
+            if (_barriers.contains(index)) {
+              return Square(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.cyan,
+                child: childForDebug,
+              );
+            }
+            if (_foods.contains(index)) {
+              return PathSquare(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.yellow,
+                child: childForDebug,
+              );
+            }
+            return PathSquare(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.black,
+              child: childForDebug,
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    for (int i=0; i<_numberOfSquares; i++) {
+    for (int i = 0; i < _numberOfSquares; i++) {
       if (_barriers.contains(i)) {
         // 是路障，不會有食物
       } else {
@@ -147,6 +209,81 @@ class _PacManScreenState extends State<PacManScreen> {
     debugPrint('dispose()');
   }
 
+  Widget _gameViewByStatus() {
+    switch (gameStatus) {
+      case 'playing':
+        return _gameView();
+      case 'pause':
+        return Stack(children: [
+          _gameView(),
+          Positioned.fill(
+            child: Container(
+              color: Colors.white24,
+            ),
+          ),
+          Center(
+            child: _playButton(),
+          ),
+        ]);
+    }
+    // 預設 stop
+    return Stack(children: [
+      _gameView(),
+      Positioned.fill(
+        child: Container(
+          color: Colors.white54,
+        ),
+      ),
+      Center(
+        child: _playButton(),
+      ),
+    ]);
+  }
+
+  Widget _gameStatusButton() {
+    switch (gameStatus) {
+      case 'playing':
+        return _pauseButton();
+      case 'pause':
+        return _playButton();
+    }
+    // 其他都是 stop，要點了開始玩
+    return _playButton();
+  }
+
+  _playButton() {
+    return FlatButton(
+      onPressed: _clickPlay,
+      child: Text(
+        'P L A Y',
+        style: TextStyle(color: Colors.white, fontSize: 36),
+      ),
+    );
+  }
+
+  _pauseButton() {
+    return FlatButton(
+      onPressed: _clickPause,
+      child: Text(
+        'P A U S E',
+        style: TextStyle(color: Colors.white, fontSize: 36),
+      ),
+    );
+  }
+
+  _clickPlay() {
+    debugPrint('_clickPlay');
+    gameStatus = "playing";
+    _playGame();
+  }
+
+  _clickPause() {
+    debugPrint('_clickPause');
+    gameStatus = "pause";
+    _stopTimer();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     ///    小精靈圖檔
@@ -157,60 +294,7 @@ class _PacManScreenState extends State<PacManScreen> {
         children: [
           Expanded(
             flex: 5,
-            child: GestureDetector(
-              onVerticalDragUpdate: (DragUpdateDetails details) {
-                if (details.delta.dy < 0) {
-                  direction = "up";
-                } else {
-                  direction = "down";
-                }
-              },
-              onHorizontalDragUpdate: (DragUpdateDetails details) {
-                if (details.delta.dx < 0) {
-                  direction = "left";
-                } else {
-                  direction = "right";
-                }
-              },
-              child: Container(
-                color: Colors.black,
-                child: GridView.builder(
-                  itemCount: _numberOfSquares,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: _numberInRow,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index == ghost) {
-                      return _ghostRole();
-                    }
-                    if (index == player) {
-                      return _playerRolw();
-                    }
-                    final childForDebug = Text('$index');
-                    if (_barriers.contains(index)) {
-                      return Square(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.cyan,
-                        child: childForDebug,
-                      );
-                    }
-                    if (_foods.contains(index)) {
-                      return PathSquare(
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.yellow,
-                        child: childForDebug,
-                      );
-                    }
-                    return PathSquare(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.black,
-                      child: childForDebug,
-                    );
-                  },
-                ),
-              ),
-            ),
+            child: _gameViewByStatus(),
           ),
           Expanded(
             child: Container(
@@ -222,15 +306,7 @@ class _PacManScreenState extends State<PacManScreen> {
                     'Score: $_score',
                     style: TextStyle(color: Colors.white, fontSize: 36),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _playGame();
-                    },
-                    child: Text(
-                      'P L A Y',
-                      style: TextStyle(color: Colors.white, fontSize: 36),
-                    ),
-                  ),
+                  _gameStatusButton(),
                 ],
               ),
             ),
