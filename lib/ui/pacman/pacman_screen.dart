@@ -57,6 +57,7 @@ class _PacManScreenState extends State<PacManScreen> {
             child: Container(
               child: GridView.builder(
                 itemCount: _numberOfSquares,
+                physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: _numberInRow,
                 ),
