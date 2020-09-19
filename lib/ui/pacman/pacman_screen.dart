@@ -35,11 +35,13 @@ class _PacManScreenState extends State<PacManScreen> {
                   if (_barriers.contains(index)) {
                     return Square(
                       backgroundColor: Colors.blue,
+                      foregroundColor: Colors.cyan,
                       child: Text('$index'),
                     );
                   }
                   return Square(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.yellow,
                     child: Text('$index'),
                   );
                 },
