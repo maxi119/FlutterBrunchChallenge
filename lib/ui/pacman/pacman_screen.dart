@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/barrier_map.dart';
 
+import 'component/path_square.dart';
 import 'component/square.dart';
 
 class PacManScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _PacManScreenState extends State<PacManScreen> {
                       child: Text('$index'),
                     );
                   }
-                  return Square(
+                  return PathSquare(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.yellow,
                     child: Text('$index'),
