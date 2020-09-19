@@ -18,6 +18,7 @@ class _PacManScreenState extends State<PacManScreen> {
   int _numberOfSquares = _numberInRow * _numberInColumn;
   int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
+  List<int> _foods = List();
   Timer _timer;
   String direction;
 
@@ -29,8 +30,16 @@ class _PacManScreenState extends State<PacManScreen> {
     });
   }
 
+  _eatFood() {
+    _foods.remove(player);
+  }
+
   _move() {
     debugPrint('move()');
+    if (_foods.contains(player)) {
+      // 若 食物列表 包含 player 上個 frame 移動後的位置，則代表，可以吃到！！
+      _eatFood();
+    }
     switch (direction) {
       case "up":
         _moveUp();
@@ -105,6 +114,19 @@ class _PacManScreenState extends State<PacManScreen> {
     );
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i=0; i<_numberOfSquares; i++) {
+      if (_barriers.contains(i)) {
+        // 是路障，不會有食物
+      } else {
+        _foods.add(i);
+      }
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -149,17 +171,25 @@ class _PacManScreenState extends State<PacManScreen> {
                     if (index == player) {
                       return _playerRolw();
                     }
+                    final childForDebug = Text('$index');
                     if (_barriers.contains(index)) {
                       return Square(
                         backgroundColor: Colors.blue,
                         foregroundColor: Colors.cyan,
-                        child: Text('$index'),
+                        child: childForDebug,
+                      );
+                    }
+                    if (_foods.contains(index)) {
+                      return PathSquare(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.yellow,
+                        child: childForDebug,
                       );
                     }
                     return PathSquare(
                       backgroundColor: Colors.black,
-                      foregroundColor: Colors.yellow,
-                      child: Text('$index'),
+                      foregroundColor: Colors.black,
+                      child: childForDebug,
                     );
                   },
                 ),
