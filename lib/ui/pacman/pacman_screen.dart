@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_brunch_challenge/ui/pacman/barrier_map.dart';
 
 class PacManScreen extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class _PacManScreenState extends State<PacManScreen> {
   static int _numberInRow = 11;
   int _numberOfSquares = _numberInRow * 17;
 
+  List _barriers = PacManMap().barriers;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,16 @@ class _PacManScreenState extends State<PacManScreen> {
                   crossAxisCount: _numberInRow,
                 ),
                 itemBuilder: (BuildContext context, int index) {
+                  if (_barriers.contains(index)) {
+                    return Padding(
+                      padding: const EdgeInsets.all(1),
+                      child: Container(
+                        color: Colors.blue,
+                        child: Text('$index'),
+                      ),
+                    );
+                  }
+
                     return Padding(
                       padding: const EdgeInsets.all(1),
                       child: Container(
