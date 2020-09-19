@@ -29,6 +29,12 @@ class _PacManScreenState extends State<PacManScreen> {
 
   _move() {
     debugPrint('move()');
+    if (_barriers.contains(player + 1)) {
+      debugPrint('撞牆，不動');
+    } else {
+      player ++;
+      setState(() {});
+    }
   }
 
   @override
