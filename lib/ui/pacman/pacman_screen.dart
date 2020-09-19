@@ -16,6 +16,7 @@ class _PacManScreenState extends State<PacManScreen> {
   static int _numberInRow = 11;
   static int _numberInColumn = 17;
   int _numberOfSquares = _numberInRow * _numberInColumn;
+  int ghost = (_numberInRow - 1) * 2; // 初始在右上角
   int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
   List<int> _foods = List();
@@ -28,7 +29,13 @@ class _PacManScreenState extends State<PacManScreen> {
     _timer?.cancel();
     _timer = Timer.periodic(Duration(milliseconds: 200), (timer) {
       _move();
+      // 一次更新這個 frame
+      setState(() {});
     });
+  }
+
+  _damage() {
+    _score --;
   }
 
   _eatFood() {
@@ -52,6 +59,10 @@ class _PacManScreenState extends State<PacManScreen> {
         _moveRight();
         break;
     }
+    // 動完後判斷有沒有被抓到
+    if (ghost == player) {
+      _damage();
+    }
     // 動完就判斷是否有東西吃
     if (_foods.contains(player)) {
       // 若 食物列表 包含 player 上個 frame 移動後的位置，則代表，可以吃到！！
@@ -64,7 +75,6 @@ class _PacManScreenState extends State<PacManScreen> {
       debugPrint('撞牆，不動');
     } else {
       player -= _numberInRow;
-      setState(() {});
     }
   }
 
@@ -73,7 +83,6 @@ class _PacManScreenState extends State<PacManScreen> {
       debugPrint('撞牆，不動');
     } else {
       player += _numberInRow;
-      setState(() {});
     }
   }
 
@@ -82,7 +91,6 @@ class _PacManScreenState extends State<PacManScreen> {
       debugPrint('撞牆，不動');
     } else {
       player--;
-      setState(() {});
     }
   }
 
@@ -91,7 +99,6 @@ class _PacManScreenState extends State<PacManScreen> {
       debugPrint('撞牆，不動');
     } else {
       player++;
-      setState(() {});
     }
   }
 
@@ -117,6 +124,9 @@ class _PacManScreenState extends State<PacManScreen> {
     );
   }
 
+  Widget _ghostRole() {
+    return Image.asset("images/ghost.png");
+  }
 
   @override
   void initState() {
@@ -171,6 +181,9 @@ class _PacManScreenState extends State<PacManScreen> {
                     crossAxisCount: _numberInRow,
                   ),
                   itemBuilder: (BuildContext context, int index) {
+                    if (index == ghost) {
+                      return _ghostRole();
+                    }
                     if (index == player) {
                       return _playerRolw();
                     }
