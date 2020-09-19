@@ -12,8 +12,9 @@ class PacManScreen extends StatefulWidget {
 class _PacManScreenState extends State<PacManScreen> {
 
   static int _numberInRow = 11;
-  int _numberOfSquares = _numberInRow * 17;
-
+  static int _numberInColumn = 17;
+  int _numberOfSquares = _numberInRow * _numberInColumn;
+  int player = _numberInRow * (_numberInColumn - 2) + 1;
   List _barriers = PacManMap().barriers;
 
   @override
@@ -33,6 +34,9 @@ class _PacManScreenState extends State<PacManScreen> {
                   crossAxisCount: _numberInRow,
                 ),
                 itemBuilder: (BuildContext context, int index) {
+                  if (index == player) {
+                    return  Image.asset("images/pacman.png");
+                  }
                   if (_barriers.contains(index)) {
                     return Square(
                       backgroundColor: Colors.blue,
