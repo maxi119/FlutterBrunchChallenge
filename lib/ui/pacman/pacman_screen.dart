@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brunch_challenge/ui/pacman/barrier_map.dart';
 
+import 'component/square.dart';
+
 class PacManScreen extends StatefulWidget {
   @override
   _PacManScreenState createState() => _PacManScreenState();
@@ -31,22 +33,15 @@ class _PacManScreenState extends State<PacManScreen> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   if (_barriers.contains(index)) {
-                    return Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Container(
-                        color: Colors.blue,
-                        child: Text('$index'),
-                      ),
+                    return Square(
+                      backgroundColor: Colors.blue,
+                      child: Text('$index'),
                     );
                   }
-
-                    return Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Container(
-                        color: Colors.grey,
-                        child: Text('$index'),
-                      ),
-                    );
+                  return Square(
+                    backgroundColor: Colors.grey,
+                    child: Text('$index'),
+                  );
                 },
               ),
             ),
