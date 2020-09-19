@@ -122,22 +122,23 @@ class _PacManScreenState extends State<PacManScreen> {
         children: [
           Expanded(
             flex: 5,
-            child: Container(
-              child: GestureDetector(
-                onVerticalDragUpdate: (DragUpdateDetails details) {
-                  if (details.delta.dy < 0) {
-                    direction = "up";
-                  } else {
-                    direction = "down";
-                  }
-                },
-                onHorizontalDragUpdate: (DragUpdateDetails details) {
-                  if (details.delta.dx < 0) {
-                    direction = "left";
-                  } else {
-                    direction = "right";
-                  }
-                },
+            child: GestureDetector(
+              onVerticalDragUpdate: (DragUpdateDetails details) {
+                if (details.delta.dy < 0) {
+                  direction = "up";
+                } else {
+                  direction = "down";
+                }
+              },
+              onHorizontalDragUpdate: (DragUpdateDetails details) {
+                if (details.delta.dx < 0) {
+                  direction = "left";
+                } else {
+                  direction = "right";
+                }
+              },
+              child: Container(
+                color: Colors.black,
                 child: GridView.builder(
                   itemCount: _numberOfSquares,
                   physics: NeverScrollableScrollPhysics(),
